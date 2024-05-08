@@ -6,7 +6,7 @@ export function Welcome() {
   return (
     <>
       <Title className={classes.title} ta='center' mt={100}>
-        Welcome to{' '}
+        Вітаю у{' '}
         <Text
           inherit
           variant='gradient'

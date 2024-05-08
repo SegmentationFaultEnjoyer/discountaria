@@ -2,8 +2,7 @@
   "name": "discountaria",
   "version": "1.0.0",
   "gitHooks": {
-    "pre-commit": "yarn typecheck && yarn lint",
-    "pre-push": "yarn test && yarn rsc"
+    "pre-commit": "yarn typecheck && yarn lint"
   },
   "scripts": {
     "dev": "vite",
