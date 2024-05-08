@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import * as fs from 'fs'
 import * as path from 'path'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 const appDirectory = fs.realpathSync(process.cwd())
 const resolveApp = (relative) => path.resolve(appDirectory, relative)
@@ -15,7 +16,14 @@ export default defineConfig(({ mode }) => {
     server: {
       port: Number(env.VITE_PORT),
     },
-    plugins: [react(), tsconfigPaths()],
+    plugins: [
+      react(), 
+      tsconfigPaths(),
+      createSvgIconsPlugin({
+        iconDirs: [path.resolve(process.cwd(), 'static/icons')],
+        symbolId: '[name]',
+      }),
+    ],
     test: {
       globals: true,
       environment: 'jsdom',
