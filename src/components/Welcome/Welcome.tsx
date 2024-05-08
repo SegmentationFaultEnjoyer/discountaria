@@ -1,3 +1,4 @@
+import { config } from '@config'
 import { Anchor, Text, Title } from '@mantine/core'
 
 import classes from './Welcome.module.scss'
@@ -24,6 +25,7 @@ export function Welcome() {
         </Anchor>
         . To get started edit pages/Home.page.tsx file.
       </Text>
+      <Text>{config.MODE}</Text>
     </>
   )
 }

@@ -59,6 +59,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "identity-obj-proxy": "^3.0.0",
     "jsdom": "^24.0.0",
+    "loglevel": "^1.9.1",
     "postcss": "^8.4.35",
     "postcss-preset-mantine": "1.15.0",
     "postcss-simple-vars": "^7.0.1",

@@ -19,7 +19,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@static/*": ["./static/*"],
-      "@test-utils": ["./test-utils"]
+      "@test-utils": ["./test-utils"],
+      "@config": ["./src/config.ts"]
     }
   },
   "include": ["src", "test-utils"]
