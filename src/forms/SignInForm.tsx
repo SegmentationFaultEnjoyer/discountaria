@@ -4,22 +4,18 @@ import { Link } from 'react-router-dom'
 
 import { SocialAuth } from '@/common'
 import { ROUTES } from '@/enums'
+import classes from '@/forms/SignUpForm/SignUpForm.module.scss'
 import globalClasses from '@/styles/components.module.scss'
-
-import classes from './SignUpForm.module.scss'
 
 type Props = HTMLAttributes<HTMLFormElement>
 
-export const SignUpForm = ({ onSubmit, ...rest }: Props) => (
+export const SignInForm = ({ onSubmit, ...rest }: Props) => (
   <form className={classes['sign-up-form']} {...rest}>
-    <TextInput placeholder='Імʼя*' />
-    <TextInput placeholder='Пошта*' />
-    <TextInput placeholder='Телефон' />
-    <TextInput placeholder='Пароль*' />
-    <TextInput placeholder='Повторити пароль*' />
+    <TextInput placeholder='Пошта' />
+    <TextInput placeholder='Пароль' />
 
     <Button mt={10} variant='outline'>
-      Зареєструватися
+      Увійти
     </Button>
 
     <SocialAuth m='0 auto' />
@@ -27,9 +23,9 @@ export const SignUpForm = ({ onSubmit, ...rest }: Props) => (
     <Link
       className={globalClasses['link-override']}
       style={{ margin: '0 auto' }}
-      to={{ pathname: ROUTES.login, search: 'mode=sign-in' }}
+      to={ROUTES.login}
     >
-      Вже маєте акаунт? Увійти
+      Не маєте акаунта? Зареєструватися
     </Link>
   </form>
 )

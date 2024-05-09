@@ -4,6 +4,7 @@
     gap: to-rem(35);
     border-radius: to-rem(20);
     border: 2px solid var(--mantine-color-primary-9);
-    padding: to-rem(70);
+    padding: to-rem(50) to-rem(70);
     width: 100%;
+    max-width: to-rem(450);
 }

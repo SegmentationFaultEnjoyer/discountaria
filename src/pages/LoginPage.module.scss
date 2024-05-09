@@ -3,4 +3,20 @@
     flex: 1;
     padding: to-rem(27);
     gap: to-rem(70);
+
+    & > *:first-child {
+        flex-basis: 55%;
+    }
+}
+
+.login-page__main {
+    border-radius: to-rem(40);
+    background: url('/images/login-background.png') no-repeat center / cover;
+    filter: hue-rotate(40deg);
+}
+
+.login-page__title {
+    font-weight: 700;
+    font-size: to-rem(150);
+    -webkit-text-stroke: 5px var(--mantine-color-primary-9) !important;
 }

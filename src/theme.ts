@@ -1,6 +1,14 @@
 import '@static/fonts/index.css'
 
-import { createTheme, MantineColorsTuple, rem } from '@mantine/core'
+import {
+  ActionIcon,
+  Button,
+  createTheme,
+  MantineColorsTuple,
+  rem,
+  TextInput,
+  Title,
+} from '@mantine/core'
 
 import classes from '@/styles/components.module.scss'
 
@@ -31,7 +39,7 @@ export const theme = createTheme({
     },
   },
   components: {
-    Title: {
+    Title: Title.extend({
       styles: {
         root: {
           letterSpacing: rem(5),
@@ -39,20 +47,27 @@ export const theme = createTheme({
           color: 'white',
         },
       },
-    },
-    TextInput: {
+    }),
+    TextInput: TextInput.extend({
+      defaultProps: {
+        variant: 'underline',
+      },
       classNames: {
         input: classes['text-input-override'],
       },
-      styles: {
-        input: {
-          border: 'none',
-          borderRadius: 0,
-          borderBottom: `2px solid ${colors.primary[9]}`,
-          paddingInlineStart: rem(8),
-          paddingBottom: rem(5),
-        },
+    }),
+    Button: Button.extend({
+      classNames: {
+        root: classes['button-override'],
       },
-    },
+      defaultProps: {
+        color: colors.primary[9],
+      },
+    }),
+    ActionIcon: ActionIcon.extend({
+      defaultProps: {
+        color: colors.primary[9],
+      },
+    }),
   },
 })
