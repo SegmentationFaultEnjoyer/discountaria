@@ -1,0 +1,11 @@
+@import 'mantine';
+
+.text-input-override {
+    &::placeholder {
+        font-size: to-rem(22);
+        line-height: to-rem(25);
+        color: var(--mantine-color-primary-9);
+    }
+    font-size: to-rem(22);
+    color: var(--mantine-color-primary-9);
+}

@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => {
         symbolId: '[name]',
       }),
     ],
+    publicDir: 'static',
     test: {
       globals: true,
       environment: 'jsdom',
@@ -40,7 +41,7 @@ export default defineConfig(({ mode }) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "./src/_mantine";`,
+          additionalData: `@import "./src/styles/mantine";`,
         },
       },
     },

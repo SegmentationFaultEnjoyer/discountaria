@@ -79,5 +79,6 @@ module.exports = {
     'react/display-name': 'off',
     'import/namespace': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'no-continue': 'off',
   },
 };
