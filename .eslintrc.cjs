@@ -80,5 +80,6 @@ module.exports = {
     'import/namespace': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
     'no-continue': 'off',
+    'consistent-return': 'off'
   },
 };

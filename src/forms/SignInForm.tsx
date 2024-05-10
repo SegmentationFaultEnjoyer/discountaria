@@ -1,4 +1,4 @@
-import { Button, TextInput } from '@mantine/core'
+import { Button, Divider, TextInput } from '@mantine/core'
 import { HTMLAttributes } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -17,6 +17,8 @@ export const SignInForm = ({ onSubmit, ...rest }: Props) => (
     <Button mt={10} variant='outline'>
       Увійти
     </Button>
+
+    <Divider mt={10} size='sm' label='або через соц. мережі' />
 
     <SocialAuth m='0 auto' />
 
