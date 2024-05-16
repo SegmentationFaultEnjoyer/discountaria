@@ -31,7 +31,7 @@ module.exports = {
     'import/resolver': {
       typescript: {},
       node: {
-        paths: ['src'],
+        paths: ['src', 'static'],
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
@@ -79,5 +79,7 @@ module.exports = {
     'react/display-name': 'off',
     'import/namespace': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'no-continue': 'off',
+    'consistent-return': 'off'
   },
 };

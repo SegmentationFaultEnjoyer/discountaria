@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'VDS';
+    src: url('./VDS/VDS_New.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VDS';
+    src: url('./VDS/VDS_Bold_New.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VDS';
+    src: url('./VDS/VDS_Italic_New.woff2') format('woff2');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VDS';
+    src: url('./VDS/VDS_Bold_Italic_New.woff2') format('woff2');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VDS';
+    src: url('./VDS/VDS_Thin.woff2') format('woff2');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VDS';
+    src: url('./VDS/VDS_Thin_Ita.woff2') format('woff2');
+    font-weight: 200;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VDS';
+    src: url('./VDS/VDS_Compensated_Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'VDS';
+    src: url('./VDS/VDS_Compensated_Light_Italic.woff2') format('woff2');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}

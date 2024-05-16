@@ -1,0 +1,39 @@
+@import 'mantine';
+
+.text-input-override {
+    &[data-variant='underline'] {
+        --placeholder-color: var(--mantine-color-primary-9);
+
+        &::placeholder {
+            font-size: to-rem(22);
+            line-height: to-rem(25);
+            color: var(--placeholder-color);
+        }
+        font-size: to-rem(22);
+        color: var(--mantine-color-primary-9);
+        border-radius: 0;
+        border-bottom: 2px solid  var(--mantine-color-primary-9);
+        padding-inline-start: to-rem(8);
+        padding-bottom: to-rem(5);
+
+        &[data-error='true'] {
+            border: none;
+            border-bottom: 2px solid red;
+            --placeholder-color: red;
+        }
+    }
+}
+
+.button-override {
+    &[data-variant='outline'] {
+        border-radius: to-rem(50);
+        border: 2px solid var(--mantine-color-primary-9);
+        font-size: to-rem(18);
+    }
+   
+}
+
+.link-override {
+    color: var(--mantine-color-primary-9);
+    font-size: to-rem(14);
+}

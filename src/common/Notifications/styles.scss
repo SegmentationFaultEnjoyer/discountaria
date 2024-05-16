@@ -1,0 +1,29 @@
+.notification {
+  display: flex;
+  place-items: center;
+  grid-template-columns: max-content 1fr;
+  grid-gap: to-rem(16);
+}
+
+.notification .notification__icon {
+  max-width: to-rem(48);
+  max-height: to-rem(48);
+}
+
+.notification__details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: to-rem(8);
+}
+
+.notification__title {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.notification__message {
+  line-height: 130%;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
