@@ -3,7 +3,7 @@ import '@mantine/core/styles.css'
 import { Flex, MantineProvider } from '@mantine/core'
 
 import { UserContextProvider } from './context'
-import { Router } from './Router'
+import { Router } from './routes'
 import { theme } from './theme'
 
 export default function App() {

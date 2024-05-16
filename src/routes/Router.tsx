@@ -8,6 +8,8 @@ import {
 
 import { ROUTES } from '@/enums'
 
+import { AuthGuard } from './guards'
+
 const pageTransitionOpts = {
   initial: 'hide',
   animate: 'show',
@@ -24,7 +26,8 @@ const pageTransitionOpts = {
 }
 
 export function Router() {
-  const LoginPage = lazy(() => import('@/pages/LoginPage'))
+  const LoginPage = lazy(() => import('@/pages/LoginPage/LoginPage'))
+  const HomePage = lazy(() => import('@/pages/HomePage/HomePage'))
 
   const router = createBrowserRouter([
     {
@@ -37,11 +40,23 @@ export function Router() {
       children: [
         {
           path: ROUTES.login,
-          element: <LoginPage {...pageTransitionOpts} />,
+          element: (
+            <AuthGuard>
+              <LoginPage {...pageTransitionOpts} />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: ROUTES.home,
+          element: (
+            <AuthGuard>
+              <HomePage {...pageTransitionOpts} />
+            </AuthGuard>
+          ),
         },
         {
           path: '*',
-          element: <Navigate replace to={ROUTES.login} />,
+          element: <Navigate replace to={ROUTES.home} />,
         },
       ],
     },

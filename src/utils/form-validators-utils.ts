@@ -1,16 +1,18 @@
-import { has, isEmpty } from 'lodash'
+import { has, isEmpty, isEqual } from 'lodash'
 
 import { WithProperty } from '@/types'
 
-type Validator = (value: unknown) => string | null
+const emailRegex = /^\S+@\S+\.\S+$/
+
+type Validator = (value: unknown, values: object) => string | null
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ValidatorFunc = (...args: any[]) => Validator
 
 export const applyRules =
   (...rules: Validator[]) =>
-  (value: unknown) => {
+  (value: unknown, values: object) => {
     for (const rule of rules) {
-      const result = rule(value)
+      const result = rule(value, values)
 
       if (!result) continue
 
@@ -47,6 +49,10 @@ export const minValue = (min: number) => (value: unknown) =>
 export const maxValue = (max: number) => (value: unknown) =>
   Number(value) > Number(max) ? `Max value is ${max}` : null
 
+export const sameAs = (valueKey: string) => (value: unknown, values: object) =>
+  // @ts-expect-error because fuck you TypeScript
+  !isEqual(value, values[valueKey]) ? "Values don't match" : null
+
 /**
  * Creates a validator function that checks if a value is not present in the
  * given list.
@@ -74,3 +80,6 @@ export const notInList =
 
 export const required = (value: unknown) =>
   isEmpty(value) ? 'Required field' : null
+
+export const email = (value: unknown) =>
+  !emailRegex.test(value as string) ? 'Expected valid email' : null

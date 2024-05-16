@@ -7,12 +7,25 @@ import { AuthTokensResponse } from '@/types'
 
 type UserContextValue = {
   setTokens: (data: AuthTokensResponse) => void
+  userData?: UserData
 } & AuthTokensResponse
+
+export type UserData = {
+  name: string
+  email: string
+  email_verified: boolean
+  password: string
+  phone: string
+  photo_url: string
+  created_at: string
+  oauth2_account_provider: string
+}
 
 export const userContext = createContext<UserContextValue>({
   id: -1,
   access_token: '',
   refresh_token: '',
+  userData: undefined,
   setTokens: () => {
     throw new ReferenceError(`'setTokens' not implemented`)
   },
@@ -27,6 +40,8 @@ export const UserContextProvider = ({
     refresh_token: localStorage.getItem(LOCAL_STORAGE_KEYS.refreshToken) ?? '',
   })
 
+  const [userData, setUserData] = useState<UserData>()
+
   const setTokens = (data: AuthTokensResponse) => {
     setTokensData(data)
 
@@ -40,8 +55,10 @@ export const UserContextProvider = ({
 
     const getUserInfo = async () => {
       try {
-        const { data } = await api.get(`/users/${tokensData.id}`)
+        const { data } = await api.get<UserData>(`/users/${tokensData.id}`)
         logger.debug('User info', data)
+
+        setUserData(data)
       } catch (error) {
         logger.error(error)
       }
@@ -51,7 +68,7 @@ export const UserContextProvider = ({
   }, [tokensData])
 
   return (
-    <userContext.Provider value={{ ...tokensData, setTokens }}>
+    <userContext.Provider value={{ ...tokensData, userData, setTokens }}>
       {children}
     </userContext.Provider>
   )

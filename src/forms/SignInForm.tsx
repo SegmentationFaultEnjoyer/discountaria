@@ -1,33 +1,89 @@
 import { Button, Divider, TextInput } from '@mantine/core'
-import { HTMLAttributes } from 'react'
+import { useForm } from '@mantine/form'
+import { FormEvent, HTMLAttributes } from 'react'
 import { Link } from 'react-router-dom'
 
+import { api } from '@/api'
 import { SocialAuth } from '@/common'
 import { ROUTES } from '@/enums'
 import classes from '@/forms/SignUpForm/SignUpForm.module.scss'
+import { logger } from '@/helpers'
+import { useFormState, useUserContext } from '@/hooks'
 import globalClasses from '@/styles/components.module.scss'
+import { AuthTokensResponse } from '@/types'
+import { applyRules, email, required } from '@/utils'
 
 type Props = HTMLAttributes<HTMLFormElement>
 
-export const SignInForm = ({ onSubmit, ...rest }: Props) => (
-  <form className={classes['sign-up-form']} {...rest}>
-    <TextInput placeholder='Пошта' />
-    <TextInput placeholder='Пароль' />
+export const SignInForm = ({ onSubmit, ...rest }: Props) => {
+  const form = useForm({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validateInputOnBlur: true,
+    validate: {
+      email: applyRules(required, email),
+      password: required,
+    },
+  })
 
-    <Button mt={10} variant='outline'>
-      Увійти
-    </Button>
+  const { disableForm, enableForm, isFormDisabled } = useFormState()
+  const { setTokens } = useUserContext()
 
-    <Divider mt={10} size='sm' label='або через соц. мережі' />
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
 
-    <SocialAuth m='0 auto' />
+    form.validate()
 
-    <Link
-      className={globalClasses['link-override']}
-      style={{ margin: '0 auto' }}
-      to={ROUTES.login}
-    >
-      Не маєте акаунта? Зареєструватися
-    </Link>
-  </form>
-)
+    if (!form.isValid()) return
+
+    disableForm()
+    try {
+      const { data } = await api.post<AuthTokensResponse>('/users/login', {
+        email: form.values.email,
+        password: form.values.password,
+      })
+
+      setTokens(data)
+
+      logger.info('User logged in', data)
+
+      onSubmit && onSubmit(e)
+    } catch (error) {
+      console.error(error)
+    }
+    enableForm()
+  }
+
+  return (
+    <form className={classes['sign-up-form']} {...rest} onSubmit={handleSubmit}>
+      <TextInput
+        placeholder='Пошта'
+        disabled={isFormDisabled}
+        {...form.getInputProps('email')}
+      />
+      <TextInput
+        placeholder='Пароль'
+        disabled={isFormDisabled}
+        {...form.getInputProps('password')}
+      />
+
+      <Button mt={10} variant='outline' type='submit' disabled={isFormDisabled}>
+        Увійти
+      </Button>
+
+      <Divider mt={10} size='sm' label='або через соц. мережі' />
+
+      <SocialAuth m='0 auto' />
+
+      <Link
+        className={globalClasses['link-override']}
+        style={{ margin: '0 auto' }}
+        to={ROUTES.login}
+      >
+        Не маєте акаунта? Зареєструватися
+      </Link>
+    </form>
+  )
+}
