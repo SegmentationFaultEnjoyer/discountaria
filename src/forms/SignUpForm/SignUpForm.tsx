@@ -10,7 +10,7 @@ import { logger } from '@/helpers'
 import { useFormState, useUserContext } from '@/hooks'
 import globalClasses from '@/styles/components.module.scss'
 import { AuthTokensResponse } from '@/types'
-import { applyRules, email, required, sameAs } from '@/utils'
+import { applyRules, Bus, email, required, sameAs } from '@/utils'
 
 import classes from './SignUpForm.module.scss'
 
@@ -59,7 +59,11 @@ export const SignUpForm = ({ onSubmit, ...rest }: Props) => {
 
       onSubmit && onSubmit(e)
     } catch (error) {
-      console.error(error)
+      Bus.error({
+        title: 'Failed to sign-up',
+        message:
+          error instanceof Error ? error.message : 'Something went wrong...',
+      })
     }
     enableForm()
   }
