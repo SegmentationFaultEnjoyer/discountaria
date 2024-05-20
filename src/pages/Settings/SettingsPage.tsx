@@ -56,16 +56,16 @@ export default function SettingsPage({ ...rest }: Props) {
     }
   }
 
+  const loadCompanies = async () => {
+    const data = await getCompanies()
+
+    logger.info('Companies data', data)
+
+    setCompanies(data)
+  }
+
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    const loadCompanies = async () => {
-      const data = await getCompanies()
-
-      logger.info('Companies data', data)
-
-      setCompanies(data)
-    }
-
     loadCompanies().catch(console.error)
   }, [])
 
@@ -117,7 +117,7 @@ export default function SettingsPage({ ...rest }: Props) {
           className={classes['settings-page__search']}
           leftSection={<Icon name={ICON_NAMES.search} size={20} />}
         />
-        <Flex mt={10} gap={40}>
+        <Flex justify='center' mt={10} gap={40}>
           <Button
             variant='outline'
             className={classes['settings-page__create-company']}
@@ -141,7 +141,13 @@ export default function SettingsPage({ ...rest }: Props) {
           opened={isCreateModalOpen}
           onClose={closeCreateModal}
         >
-          <CreateCompanyForm userId={userId} onSubmit={closeCreateModal} />
+          <CreateCompanyForm
+            userId={userId}
+            onSubmit={() => {
+              closeCreateModal()
+              loadCompanies()
+            }}
+          />
         </Modal>
       </Portal>
     </motion.div>
