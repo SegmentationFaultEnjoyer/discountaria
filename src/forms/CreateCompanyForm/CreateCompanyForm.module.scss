@@ -1,0 +1,10 @@
+.create-company-form {
+    display: flex;
+    flex-direction: column;
+    gap: to-rem(30);
+    padding: to-rem(20) to-rem(10);
+
+    & > *:first-child {
+        align-self: center;
+    }
+}

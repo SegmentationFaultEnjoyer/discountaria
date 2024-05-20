@@ -1,0 +1,12 @@
+.page-title {
+    width: 100%;
+    height: to-rem(335);
+    background: url('/images/page-title-background.jpeg') no-repeat center / cover;
+    border-radius: 0 0 to-rem(20) to-rem(20);
+    filter: hue-rotate(30deg);
+}
+
+.page-title__title {
+    text-transform: uppercase;
+    font-weight: 700 !important;
+}

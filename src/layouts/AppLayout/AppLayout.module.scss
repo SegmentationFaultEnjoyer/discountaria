@@ -1,0 +1,9 @@
+.app-layout {
+    // max-width: to-rem(1500);
+    // margin: 0 auto;
+    // border: 1px solid black;
+
+    & > *:first-child {
+        flex-basis: 25%;
+    }
+}

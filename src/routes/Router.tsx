@@ -1,12 +1,8 @@
-import { lazy, Suspense } from 'react'
-import {
-  createBrowserRouter,
-  Navigate,
-  Outlet,
-  RouterProvider,
-} from 'react-router-dom'
+import { lazy } from 'react'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { ROUTES } from '@/enums'
+import { AppLayout } from '@/layouts'
 
 import { AuthGuard } from './guards'
 
@@ -28,15 +24,12 @@ const pageTransitionOpts = {
 export function Router() {
   const LoginPage = lazy(() => import('@/pages/LoginPage/LoginPage'))
   const HomePage = lazy(() => import('@/pages/HomePage/HomePage'))
+  const SettingsPage = lazy(() => import('@/pages/Settings/SettingsPage'))
 
   const router = createBrowserRouter([
     {
       path: '/',
-      element: (
-        <Suspense fallback={<></>}>
-          <Outlet />
-        </Suspense>
-      ),
+      element: <AppLayout />,
       children: [
         {
           path: ROUTES.login,
@@ -53,6 +46,18 @@ export function Router() {
               <HomePage {...pageTransitionOpts} />
             </AuthGuard>
           ),
+        },
+        {
+          path: ROUTES.settings,
+          element: (
+            <AuthGuard>
+              <SettingsPage {...pageTransitionOpts} />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: '/',
+          element: <Navigate replace to={ROUTES.home} />,
         },
         {
           path: '*',

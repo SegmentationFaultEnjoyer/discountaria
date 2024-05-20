@@ -1,3 +1,6 @@
+export * from './AvatarFileInput/AvatarFileInput'
 export * from './Icon/Icon'
 export * from './Notifications/Notifications'
+export * from './PageTitle/PageTitle'
+export * from './SideBar/SideBar'
 export * from './SocialAuth/SocialAuth'

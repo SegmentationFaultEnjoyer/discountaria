@@ -5,6 +5,7 @@ import {
   Button,
   createTheme,
   MantineColorsTuple,
+  Modal,
   rem,
   TextInput,
   Title,
@@ -43,7 +44,7 @@ export const theme = createTheme({
       styles: {
         root: {
           letterSpacing: rem(5),
-          WebkitTextStroke: `2px ${colors.primary[9]}`,
+          WebkitTextStroke: `3px ${colors.primary[9]}`,
           color: 'white',
         },
       },
@@ -67,6 +68,23 @@ export const theme = createTheme({
     ActionIcon: ActionIcon.extend({
       defaultProps: {
         color: colors.primary[9],
+      },
+    }),
+    Modal: Modal.extend({
+      defaultProps: {
+        centered: true,
+        closeOnClickOutside: false,
+      },
+      styles: {
+        title: {
+          fontSize: rem(32),
+          fontWeight: 600,
+          color: colors.primary[9],
+        },
+        content: {
+          padding: rem(20),
+          borderRadius: rem(30),
+        },
       },
     }),
   },
