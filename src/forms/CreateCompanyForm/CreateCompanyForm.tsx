@@ -2,9 +2,8 @@ import { Button, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { FormEvent, HTMLAttributes } from 'react'
 
-import { api } from '@/api'
 import { AvatarFileInput } from '@/common'
-import { useFormState } from '@/hooks'
+import { useCompanies, useFormState } from '@/hooks'
 import { applyRules, Bus, maxLength, minLength, required } from '@/utils'
 
 import classes from './CreateCompanyForm.module.scss'
@@ -17,7 +16,7 @@ export const CreateCompanyForm = ({ userId, onSubmit }: Props) => {
       name: '',
       url: '',
       description: '',
-      logoFile: null as File | null,
+      logoFile: null as unknown as File,
     },
     validate: {
       name: applyRules(required, minLength(3), maxLength(60)),
@@ -28,19 +27,7 @@ export const CreateCompanyForm = ({ userId, onSubmit }: Props) => {
   })
 
   const { disableForm, enableForm, isFormDisabled } = useFormState()
-
-  const uploadLogo = async () => {
-    const formData = new FormData()
-    formData.append('Document', form.values.logoFile!)
-
-    const {
-      data: { url },
-    } = await api.post<{ url: string }>('/photo', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-
-    return url
-  }
+  const { createCompany } = useCompanies()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -49,14 +36,7 @@ export const CreateCompanyForm = ({ userId, onSubmit }: Props) => {
 
     disableForm()
     try {
-      const logoUrl = await uploadLogo()
-
-      await api.post(`/users/${userId}/companies`, {
-        name: form.values.name,
-        url: form.values.url,
-        description: form.values.description,
-        logo_url: logoUrl,
-      })
+      await createCompany(userId, form.values)
 
       onSubmit && onSubmit(e)
     } catch (error) {

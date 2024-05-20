@@ -1,12 +1,14 @@
 import { Button, Flex, Modal, Portal, Text, TextInput } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { motion, MotionProps } from 'framer-motion'
-import { HTMLAttributes } from 'react'
+import { HTMLAttributes, useEffect, useState } from 'react'
 
-import { AvatarFileInput, Icon } from '@/common'
+import { AvatarFileInput, CompanyCard, Icon } from '@/common'
 import { ICON_NAMES } from '@/enums'
 import { CreateCompanyForm } from '@/forms'
-import { useUser, useUserContext } from '@/hooks'
+import { logger } from '@/helpers'
+import { useCompanies, useUser, useUserContext } from '@/hooks'
+import { CompanyData } from '@/types'
 import { Bus } from '@/utils'
 
 import classes from './Settings.module.scss'
@@ -14,8 +16,11 @@ import classes from './Settings.module.scss'
 type Props = HTMLAttributes<HTMLDivElement> & MotionProps
 
 export default function SettingsPage({ ...rest }: Props) {
+  const [companies, setCompanies] = useState<CompanyData[]>([])
+
   const { setTokens, userData, id: userId, fetchUserData } = useUserContext()
   const { uploadUserAvatar } = useUser()
+  const { getCompanies } = useCompanies()
 
   const [
     isCreateModalOpen,
@@ -50,6 +55,19 @@ export default function SettingsPage({ ...rest }: Props) {
       })
     }
   }
+
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    const loadCompanies = async () => {
+      const data = await getCompanies()
+
+      logger.info('Companies data', data)
+
+      setCompanies(data)
+    }
+
+    loadCompanies().catch(console.error)
+  }, [])
 
   return (
     <motion.div {...rest} className={classes['settings-page']}>
@@ -99,7 +117,7 @@ export default function SettingsPage({ ...rest }: Props) {
           className={classes['settings-page__search']}
           leftSection={<Icon name={ICON_NAMES.search} size={20} />}
         />
-        <Flex mt={10}>
+        <Flex mt={10} gap={40}>
           <Button
             variant='outline'
             className={classes['settings-page__create-company']}
@@ -110,6 +128,10 @@ export default function SettingsPage({ ...rest }: Props) {
               <Text size='22px'>Створити компанію</Text>
             </Flex>
           </Button>
+          {Boolean(companies.length) &&
+            companies.map(company => (
+              <CompanyCard key={company.name} data={company} />
+            ))}
         </Flex>
       </Flex>
 

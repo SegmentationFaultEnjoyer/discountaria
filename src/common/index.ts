@@ -1,4 +1,5 @@
 export * from './AvatarFileInput/AvatarFileInput'
+export * from './CompanyCard/CompanyCard'
 export * from './Icon/Icon'
 export * from './Notifications/Notifications'
 export * from './PageTitle/PageTitle'
