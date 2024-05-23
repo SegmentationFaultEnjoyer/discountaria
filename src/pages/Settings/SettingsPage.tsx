@@ -2,8 +2,10 @@ import { Button, Flex, Modal, Portal, Text, TextInput } from '@mantine/core'
 import { useDebouncedState, useDisclosure } from '@mantine/hooks'
 import { motion, MotionProps } from 'framer-motion'
 import { HTMLAttributes, useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { AvatarFileInput, CompanyCard, Icon } from '@/common'
+import { DEFAULT_INPUT_DEBOUNCE } from '@/consts'
 import { ICON_NAMES } from '@/enums'
 import { ChangePasswordForm, CreateCompanyForm, EditProfileForm } from '@/forms'
 import { logger } from '@/helpers'
@@ -14,8 +16,6 @@ import { Bus } from '@/utils'
 import classes from './Settings.module.scss'
 
 type Props = HTMLAttributes<HTMLDivElement> & MotionProps
-
-const DEFAULT_INPUT_DEBOUNCE = 400
 
 export default function SettingsPage({ ...rest }: Props) {
   const [companies, setCompanies] = useState<CompanyData[]>([])
@@ -160,7 +160,7 @@ export default function SettingsPage({ ...rest }: Props) {
           onChange={e => setSearch(e.target.value)}
         />
 
-        <Flex justify='center' mt={10} gap={40}>
+        <Flex mt={10} gap={40} className={classes['settings-page__companies']}>
           <Button
             variant='outline'
             className={classes['settings-page__create-company']}
@@ -173,7 +173,13 @@ export default function SettingsPage({ ...rest }: Props) {
           </Button>
           {Boolean(filteredCompanies?.length) &&
             filteredCompanies.map(company => (
-              <CompanyCard key={company.name} data={company} />
+              <Link
+                key={company.id}
+                to={`/companies/${company.id}`}
+                className={classes['settings-page__link']}
+              >
+                <CompanyCard data={company} />
+              </Link>
             ))}
         </Flex>
       </Flex>

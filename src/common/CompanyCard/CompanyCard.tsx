@@ -1,7 +1,9 @@
 import { Chip, Flex, FlexProps, Image, Text } from '@mantine/core'
 
+import { ICON_NAMES } from '@/enums'
 import { CompanyData } from '@/types'
 
+import { Icon } from '../Icon/Icon'
 import classes from './CompanyCard.module.scss'
 
 type Props = {
@@ -19,15 +21,20 @@ export const CompanyCard = ({
     className={classes['company-card']}
     {...rest}
   >
-    <Flex align='center' gap={20}>
-      <Image
-        alt='company logo'
-        fit='cover'
-        radius='md'
-        w={100}
-        h={100}
-        src={logo_url}
-      />
+    <Flex align='center' w='100%' gap={20}>
+      {logo_url ? (
+        <Image
+          alt='company logo'
+          fit='cover'
+          radius='md'
+          w={100}
+          h={100}
+          src={logo_url}
+        />
+      ) : (
+        <Icon size={100} name={ICON_NAMES.store} />
+      )}
+
       <Flex direction='column' gap={20}>
         <Text className={classes['company-card__title']} size='20px'>
           {name}

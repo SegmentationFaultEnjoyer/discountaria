@@ -1,6 +1,7 @@
 export * from './AvatarFileInput/AvatarFileInput'
 export * from './CompanyCard/CompanyCard'
 export * from './Icon/Icon'
+export * from './NoDataMessage/NoDataMessage'
 export * from './Notifications/Notifications'
 export * from './PageTitle/PageTitle'
 export * from './SideBar/SideBar'

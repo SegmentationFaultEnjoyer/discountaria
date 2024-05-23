@@ -25,6 +25,9 @@ export function Router() {
   const LoginPage = lazy(() => import('@/pages/LoginPage/LoginPage'))
   const HomePage = lazy(() => import('@/pages/HomePage/HomePage'))
   const SettingsPage = lazy(() => import('@/pages/Settings/SettingsPage'))
+  const CompaniesPage = lazy(
+    () => import('@/pages/CompaniesPage/CompaniesPage'),
+  )
 
   const router = createBrowserRouter([
     {
@@ -52,6 +55,14 @@ export function Router() {
           element: (
             <AuthGuard>
               <SettingsPage {...pageTransitionOpts} />
+            </AuthGuard>
+          ),
+        },
+        {
+          path: ROUTES.companies,
+          element: (
+            <AuthGuard>
+              <CompaniesPage {...pageTransitionOpts} />
             </AuthGuard>
           ),
         },

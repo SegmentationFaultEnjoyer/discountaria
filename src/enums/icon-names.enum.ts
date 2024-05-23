@@ -1,4 +1,5 @@
 export enum ICON_NAMES {
+  archive = 'archive',
   camera = 'camera',
   checkCircle = 'check-circle',
   clock = 'clock',

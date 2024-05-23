@@ -28,6 +28,11 @@ export const SideBar = ({ ...rest }: Props) => {
       icon: ICON_NAMES.moneyBag,
     },
     {
+      to: ROUTES.companies,
+      label: 'Заклади',
+      icon: ICON_NAMES.store,
+    },
+    {
       to: ROUTES.settings,
       label: 'Налаштування',
       icon: ICON_NAMES.settings,

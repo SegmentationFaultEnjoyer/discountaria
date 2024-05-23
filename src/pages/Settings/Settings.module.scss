@@ -33,3 +33,19 @@
     border-radius: to-rem(20) !important;
     width: to-rem(280);
 }
+
+.settings-page__companies {
+    flex-flow: row wrap;
+    max-width: to-rem(1000);
+    margin: 0 auto;
+}
+
+.settings-page__link {
+    all: unset;
+    transition: scale 0.2s ease-in-out;
+    
+    &:hover {
+        cursor: pointer;
+        scale: 1.02;
+    }
+}

@@ -1,0 +1,27 @@
+.companies-page {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: to-rem(30);
+}
+
+.companies-page__search {
+    align-self: flex-end;
+}
+
+
+.companies-page__companies {
+    flex-flow: row wrap;
+    max-width: to-rem(1000);
+    margin: 0 auto;
+}
+
+.companies-page__link {
+    all: unset;
+    transition: scale 0.2s ease-in-out;
+    
+    &:hover {
+        cursor: pointer;
+        scale: 1.02;
+    }
+}

@@ -5,6 +5,7 @@ import {
   Button,
   Chip,
   createTheme,
+  Loader,
   MantineColorsTuple,
   Modal,
   rem,
@@ -112,6 +113,12 @@ export const theme = createTheme({
           padding: rem(20),
           borderRadius: rem(30),
         },
+      },
+    }),
+    Loader: Loader.extend({
+      defaultProps: {
+        size: 'lg',
+        color: colors.primary[9],
       },
     }),
   },
