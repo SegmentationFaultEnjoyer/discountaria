@@ -1,0 +1,22 @@
+.side-bar {
+    border-right: to-rem(2) solid var(--mantine-color-primary-9);
+    padding: to-rem(40) to-rem(32);
+    max-width: to-rem(370);
+}
+
+.side-bar__link {
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: to-rem(12);
+    color: var(--mantine-color-primary-6);
+    padding-bottom: to-rem(7);
+    border-bottom: to-rem(2) solid var(--mantine-color-primary-6);
+    transition: all 0.2s ease-in-out;
+
+    &:hover, &[aria-selected='true'] {
+        cursor: pointer;
+        color: var(--mantine-color-primary-9);
+        border-bottom: 2px solid var(--mantine-color-primary-9);
+    }
+}

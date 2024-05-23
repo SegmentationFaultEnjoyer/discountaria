@@ -1,0 +1,35 @@
+.settings-page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: to-rem(35) to-rem(30);
+    gap: to-rem(30);
+}
+
+.settings-page__actions,
+.settings-page__search {
+    align-self: flex-end;
+}
+
+.settings-page__info-label {
+    font-weight: 700;
+    line-height: to-rem(25);
+
+    &::after {
+        content: ':';
+    }
+}
+
+.settings-page__info-value {
+    text-decoration: underline;
+    text-underline-offset: to-rem(5);
+    line-height: to-rem(25);
+    color: var(--mantine-color-primary-9);
+}
+
+.settings-page__create-company {
+    height: to-rem(190);
+    border-radius: to-rem(20) !important;
+    width: to-rem(280);
+}

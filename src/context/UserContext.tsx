@@ -1,31 +1,27 @@
+import { CanceledError } from 'axios'
 import { createContext, HTMLAttributes, useEffect, useState } from 'react'
 
-import { api } from '@/api'
 import { LOCAL_STORAGE_KEYS } from '@/enums'
 import { logger } from '@/helpers'
-import { AuthTokensResponse } from '@/types'
+import { useUser } from '@/hooks/useUser'
+import { AuthTokensResponse, UserData } from '@/types'
 
 type UserContextValue = {
   setTokens: (data: AuthTokensResponse) => void
+  fetchUserData: (signal?: AbortSignal) => Promise<void>
   userData?: UserData
+  isLoading: boolean
 } & AuthTokensResponse
-
-export type UserData = {
-  name: string
-  email: string
-  email_verified: boolean
-  password: string
-  phone: string
-  photo_url: string
-  created_at: string
-  oauth2_account_provider: string
-}
 
 export const userContext = createContext<UserContextValue>({
   id: -1,
   access_token: '',
   refresh_token: '',
   userData: undefined,
+  isLoading: false,
+  fetchUserData: () => {
+    throw new ReferenceError(`'fetchUserData' not implemented`)
+  },
   setTokens: () => {
     throw new ReferenceError(`'setTokens' not implemented`)
   },
@@ -41,6 +37,9 @@ export const UserContextProvider = ({
   })
 
   const [userData, setUserData] = useState<UserData>()
+  const [isLoading, setIsLoading] = useState(true)
+
+  const { getUserData } = useUser()
 
   const setTokens = (data: AuthTokensResponse) => {
     setTokensData(data)
@@ -50,25 +49,47 @@ export const UserContextProvider = ({
     localStorage.setItem(LOCAL_STORAGE_KEYS.refreshToken, data.refresh_token)
   }
 
-  useEffect(() => {
-    if (tokensData.id === -1) return
+  const getUserInfo = async (signal?: AbortSignal) => {
+    setIsLoading(true)
+    try {
+      const data = await getUserData(tokensData.id, signal)
 
-    const getUserInfo = async () => {
-      try {
-        const { data } = await api.get<UserData>(`/users/${tokensData.id}`)
-        logger.debug('User info', data)
+      logger.debug('User info', data)
 
-        setUserData(data)
-      } catch (error) {
-        logger.error(error)
+      setUserData(data)
+
+      setIsLoading(false)
+    } catch (error) {
+      logger.error(error)
+      setUserData(undefined)
+
+      if (!(error instanceof CanceledError)) {
+        setIsLoading(false)
       }
     }
+  }
 
-    getUserInfo()
+  /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    const abortController = new AbortController()
+
+    getUserInfo(abortController.signal)
+
+    return () => {
+      abortController.abort(`'getUserInfo' cancelled due to racing condition`)
+    }
   }, [tokensData])
 
   return (
-    <userContext.Provider value={{ ...tokensData, userData, setTokens }}>
+    <userContext.Provider
+      value={{
+        ...tokensData,
+        userData,
+        setTokens,
+        fetchUserData: getUserInfo,
+        isLoading,
+      }}
+    >
       {children}
     </userContext.Provider>
   )

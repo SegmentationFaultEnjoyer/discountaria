@@ -3,14 +3,12 @@ import { useForm } from '@mantine/form'
 import { FormEvent, HTMLAttributes } from 'react'
 import { Link } from 'react-router-dom'
 
-import { api } from '@/api'
 import { SocialAuth } from '@/common'
 import { ROUTES } from '@/enums'
 import classes from '@/forms/SignUpForm/SignUpForm.module.scss'
 import { logger } from '@/helpers'
-import { useFormState, useUserContext } from '@/hooks'
+import { useFormState, useUser, useUserContext } from '@/hooks'
 import globalClasses from '@/styles/components.module.scss'
-import { AuthTokensResponse } from '@/types'
 import { applyRules, Bus, email, required } from '@/utils'
 
 type Props = HTMLAttributes<HTMLFormElement>
@@ -31,6 +29,8 @@ export const SignInForm = ({ onSubmit, ...rest }: Props) => {
   const { disableForm, enableForm, isFormDisabled } = useFormState()
   const { setTokens } = useUserContext()
 
+  const { loginUser } = useUser()
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -40,7 +40,7 @@ export const SignInForm = ({ onSubmit, ...rest }: Props) => {
 
     disableForm()
     try {
-      const { data } = await api.post<AuthTokensResponse>('/users/login', {
+      const data = await loginUser({
         email: form.values.email,
         password: form.values.password,
       })

@@ -1,0 +1,7 @@
+.create-company-form {
+    @include form-layout;
+
+    & > *:first-child {
+        align-self: center;
+    }
+}
