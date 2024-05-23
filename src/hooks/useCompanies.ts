@@ -1,7 +1,10 @@
 import { api } from '@/api'
-import { CompanyData } from '@/types'
+import { ApiListResponse, CompanyData } from '@/types'
 
-type CreateData = Omit<CompanyData, 'logo_url' | 'created_at'> & {
+type CreateData = Omit<
+  CompanyData,
+  'logo_url' | 'created_at' | 'id' | 'user_id'
+> & {
   logoFile: File
 }
 
@@ -30,10 +33,18 @@ export const useCompanies = () => {
     })
   }
 
-  const getCompanies = async () => {
-    const { data } = await api.get<CompanyData[]>('/companies')
+  // TODO: pagination maybe:)
+  const getCompanies = async (filter?: { ownerId: number }) => {
+    const { data } = await api.get<ApiListResponse<CompanyData[]>>(
+      '/companies',
+      filter && {
+        params: {
+          'filter[owner_id]': filter.ownerId,
+        },
+      },
+    )
 
-    return data
+    return data.Data
   }
 
   return {

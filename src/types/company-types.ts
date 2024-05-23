@@ -4,4 +4,7 @@ export type CompanyData = {
   description: string
   logo_url: string
   created_at: string
+  id: number
+  user_id: number
+  category: string
 }

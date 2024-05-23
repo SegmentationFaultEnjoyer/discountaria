@@ -1,8 +1,9 @@
-import { Button, TextInput } from '@mantine/core'
+import { Button, Select, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { FormEvent, HTMLAttributes } from 'react'
 
 import { AvatarFileInput } from '@/common'
+import { COMPANY_CATEGORIES } from '@/consts'
 import { useCompanies, useFormState } from '@/hooks'
 import { applyRules, Bus, maxLength, minLength, required } from '@/utils'
 
@@ -15,6 +16,7 @@ export const CreateCompanyForm = ({ userId, onSubmit }: Props) => {
     initialValues: {
       name: '',
       url: '',
+      category: '',
       description: '',
       logoFile: null as unknown as File,
     },
@@ -22,6 +24,7 @@ export const CreateCompanyForm = ({ userId, onSubmit }: Props) => {
       name: applyRules(required, minLength(3), maxLength(60)),
       description: applyRules(required, minLength(3), maxLength(60)),
       url: required,
+      category: required,
     },
     validateInputOnBlur: true,
   })
@@ -31,6 +34,8 @@ export const CreateCompanyForm = ({ userId, onSubmit }: Props) => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    form.validate()
 
     if (!form.isValid()) return
 
@@ -69,6 +74,12 @@ export const CreateCompanyForm = ({ userId, onSubmit }: Props) => {
         placeholder='Опис'
         disabled={isFormDisabled}
         {...form.getInputProps('description')}
+      />
+      <Select
+        placeholder='Категорія'
+        disabled={isFormDisabled}
+        data={COMPANY_CATEGORIES}
+        {...form.getInputProps('category')}
       />
       <TextInput
         placeholder='Веб Сайт'

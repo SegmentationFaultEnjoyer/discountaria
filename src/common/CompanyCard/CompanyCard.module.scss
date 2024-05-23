@@ -1,7 +1,12 @@
 .company-card {
     border-radius: to-rem(20);
     border: to-rem(2) solid var(--mantine-color-primary-9);
-    padding: to-rem(20);
+    padding: to-rem(15) to-rem(20);
     width: to-rem(280);
     height: to-rem(190);
+    color: var(--mantine-color-primary-9);
+}
+
+.company-card__title {
+    font-weight: 700 !important;
 }

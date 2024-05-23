@@ -9,6 +9,11 @@
             line-height: to-rem(25);
             color: var(--placeholder-color);
         }
+
+        &:focus, &:active {
+            border-bottom: to-rem(3) solid  var(--mantine-color-primary-4);
+        }
+
         font-size: to-rem(22);
         color: var(--mantine-color-primary-9);
         border-radius: 0;

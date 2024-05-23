@@ -3,10 +3,12 @@ import '@static/fonts/index.css'
 import {
   ActionIcon,
   Button,
+  Chip,
   createTheme,
   MantineColorsTuple,
   Modal,
   rem,
+  Select,
   TextInput,
   Title,
 } from '@mantine/core'
@@ -46,6 +48,31 @@ export const theme = createTheme({
           letterSpacing: rem(5),
           WebkitTextStroke: `3px ${colors.primary[9]}`,
           color: 'white',
+        },
+      },
+    }),
+    Select: Select.extend({
+      defaultProps: {
+        variant: 'underline',
+      },
+      classNames: {
+        input: classes['text-input-override'],
+      },
+      styles: {
+        option: {
+          color: colors.primary[9],
+        },
+      },
+    }),
+    Chip: Chip.extend({
+      defaultProps: {
+        variant: 'outline',
+        checked: false,
+      },
+      styles: {
+        label: {
+          border: `2px solid ${colors.primary[8]}`,
+          color: colors.primary[8],
         },
       },
     }),

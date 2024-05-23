@@ -1,11 +1,11 @@
 import { Button, Flex, Modal, Portal, Text, TextInput } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
+import { useDebouncedState, useDisclosure } from '@mantine/hooks'
 import { motion, MotionProps } from 'framer-motion'
-import { HTMLAttributes, useEffect, useState } from 'react'
+import { HTMLAttributes, useEffect, useMemo, useState } from 'react'
 
 import { AvatarFileInput, CompanyCard, Icon } from '@/common'
 import { ICON_NAMES } from '@/enums'
-import { CreateCompanyForm } from '@/forms'
+import { ChangePasswordForm, CreateCompanyForm, EditProfileForm } from '@/forms'
 import { logger } from '@/helpers'
 import { useCompanies, useUser, useUserContext } from '@/hooks'
 import { CompanyData } from '@/types'
@@ -15,8 +15,11 @@ import classes from './Settings.module.scss'
 
 type Props = HTMLAttributes<HTMLDivElement> & MotionProps
 
+const DEFAULT_INPUT_DEBOUNCE = 400
+
 export default function SettingsPage({ ...rest }: Props) {
   const [companies, setCompanies] = useState<CompanyData[]>([])
+  const [search, setSearch] = useDebouncedState('', DEFAULT_INPUT_DEBOUNCE)
 
   const { setTokens, userData, id: userId, fetchUserData } = useUserContext()
   const { uploadUserAvatar } = useUser()
@@ -25,6 +28,12 @@ export default function SettingsPage({ ...rest }: Props) {
   const [
     isCreateModalOpen,
     { open: openCreateModal, close: closeCreateModal },
+  ] = useDisclosure()
+  const [iEditModalOpen, { open: openEditModal, close: closeEditModal }] =
+    useDisclosure()
+  const [
+    isPasswordModalOpen,
+    { open: openPasswordModal, close: closePasswordModal },
   ] = useDisclosure()
 
   const userInfo: { label: string; value: string }[] = [
@@ -42,6 +51,14 @@ export default function SettingsPage({ ...rest }: Props) {
     },
   ]
 
+  const filteredCompanies = useMemo(
+    () =>
+      companies?.filter(el =>
+        el.name.toLowerCase().includes(search.toLowerCase()),
+      ),
+    [companies, search],
+  )
+
   const uploadAvatar = async (file: File) => {
     try {
       await uploadUserAvatar(userId, file)
@@ -57,7 +74,9 @@ export default function SettingsPage({ ...rest }: Props) {
   }
 
   const loadCompanies = async () => {
-    const data = await getCompanies()
+    if (!userId) return
+
+    const data = await getCompanies({ ownerId: userId })
 
     logger.info('Companies data', data)
 
@@ -67,21 +86,42 @@ export default function SettingsPage({ ...rest }: Props) {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     loadCompanies().catch(console.error)
-  }, [])
+  }, [userId])
 
   return (
     <motion.div {...rest} className={classes['settings-page']}>
-      <Button
-        variant='subtle'
-        size='lg'
-        className={classes['settings-page__logout-btn']}
-        leftSection={<Icon name={ICON_NAMES.logout} size={25} />}
-        onClick={() =>
-          setTokens({ id: -1, access_token: '', refresh_token: '' })
-        }
-      >
-        Вийти
-      </Button>
+      <Flex className={classes['settings-page__actions']}>
+        {!userData?.oauth2_account_provider && (
+          <Button
+            variant='subtle'
+            size='lg'
+            leftSection={<Icon name={ICON_NAMES.pencil} size={25} />}
+            onClick={openPasswordModal}
+          >
+            Змінити пароль
+          </Button>
+        )}
+
+        <Button
+          variant='subtle'
+          size='lg'
+          leftSection={<Icon name={ICON_NAMES.pencil} size={25} />}
+          onClick={openEditModal}
+        >
+          Редагувати
+        </Button>
+        <Button
+          variant='subtle'
+          size='lg'
+          leftSection={<Icon name={ICON_NAMES.logout} size={25} />}
+          onClick={() =>
+            setTokens({ id: -1, access_token: '', refresh_token: '' })
+          }
+        >
+          Вийти
+        </Button>
+      </Flex>
+
       <Flex m='0 auto' align='center' gap={60}>
         <AvatarFileInput
           size={150}
@@ -114,9 +154,12 @@ export default function SettingsPage({ ...rest }: Props) {
           variant='default'
           placeholder='Пошук'
           size='md'
+          defaultValue={search}
           className={classes['settings-page__search']}
           leftSection={<Icon name={ICON_NAMES.search} size={20} />}
+          onChange={e => setSearch(e.target.value)}
         />
+
         <Flex justify='center' mt={10} gap={40}>
           <Button
             variant='outline'
@@ -128,8 +171,8 @@ export default function SettingsPage({ ...rest }: Props) {
               <Text size='22px'>Створити компанію</Text>
             </Flex>
           </Button>
-          {Boolean(companies.length) &&
-            companies.map(company => (
+          {Boolean(filteredCompanies?.length) &&
+            filteredCompanies.map(company => (
               <CompanyCard key={company.name} data={company} />
             ))}
         </Flex>
@@ -148,6 +191,29 @@ export default function SettingsPage({ ...rest }: Props) {
               loadCompanies()
             }}
           />
+        </Modal>
+        {userData && (
+          <Modal
+            title='Редагувати профіль'
+            opened={iEditModalOpen}
+            onClose={closeEditModal}
+          >
+            <EditProfileForm
+              userData={userData}
+              userId={userId}
+              onSubmit={() => {
+                closeEditModal()
+                fetchUserData()
+              }}
+            />
+          </Modal>
+        )}
+        <Modal
+          title='Змінити пароль'
+          opened={isPasswordModalOpen}
+          onClose={closePasswordModal}
+        >
+          <ChangePasswordForm userId={userId} onSubmit={closePasswordModal} />
         </Modal>
       </Portal>
     </motion.div>

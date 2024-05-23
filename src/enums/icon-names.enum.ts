@@ -11,6 +11,7 @@ export enum ICON_NAMES {
   linkedin = 'linkedin',
   logout = 'logout',
   moneyBag = 'money-bag',
+  pencil = 'pencil',
   plus = 'plus',
   qrCode = 'qr-code',
   search = 'search',
