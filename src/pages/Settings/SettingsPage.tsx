@@ -4,7 +4,7 @@ import { motion, MotionProps } from 'framer-motion'
 import { HTMLAttributes, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { AvatarFileInput, CompanyCard, Icon } from '@/common'
+import { AvatarFileInput, CompanyCard, Icon, TileButton } from '@/common'
 import { DEFAULT_INPUT_DEBOUNCE } from '@/consts'
 import { ICON_NAMES } from '@/enums'
 import { ChangePasswordForm, CreateCompanyForm, EditProfileForm } from '@/forms'
@@ -161,16 +161,7 @@ export default function SettingsPage({ ...rest }: Props) {
         />
 
         <Flex mt={10} gap={40} className={classes['settings-page__companies']}>
-          <Button
-            variant='outline'
-            className={classes['settings-page__create-company']}
-            onClick={openCreateModal}
-          >
-            <Flex direction='column' align='center' gap={25}>
-              <Icon size={70} name={ICON_NAMES.plus} />
-              <Text size='22px'>Створити компанію</Text>
-            </Flex>
-          </Button>
+          <TileButton text='Створити компанію' onClick={openCreateModal} />
           {Boolean(filteredCompanies?.length) &&
             filteredCompanies.map(company => (
               <Link

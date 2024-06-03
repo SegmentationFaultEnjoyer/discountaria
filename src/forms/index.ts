@@ -1,5 +1,6 @@
 export * from './ChangePasswordForm/ChangePasswordForm'
 export * from './CreateCompanyForm/CreateCompanyForm'
+export * from './CreateOfferForm/CreateOfferForm'
 export * from './EditProfileForm/EditProfileForm'
 export * from './SignInForm'
 export * from './SignUpForm/SignUpForm'

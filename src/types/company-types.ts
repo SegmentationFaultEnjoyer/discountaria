@@ -8,3 +8,9 @@ export type CompanyData = {
   user_id: number
   category: string
 }
+
+export type OfferData = {
+  sale: number
+  users: string[] // email
+  expired_at: string
+}

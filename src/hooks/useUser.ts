@@ -54,6 +54,12 @@ export function useUser() {
     return data
   }
 
+  const getUserList = async () => {
+    const { data } = await api.get<UserData[]>('/users')
+
+    return data
+  }
+
   return {
     createUser,
     editUser,
@@ -62,5 +68,6 @@ export function useUser() {
     uploadUserAvatar,
 
     getUserData,
+    getUserList,
   }
 }

@@ -2539,6 +2539,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/dates@npm:^7.10.0":
+  version: 7.10.0
+  resolution: "@mantine/dates@npm:7.10.0"
+  dependencies:
+    clsx: "npm:^2.1.1"
+  peerDependencies:
+    "@mantine/core": 7.10.0
+    "@mantine/hooks": 7.10.0
+    dayjs: ">=1.0.0"
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10c0/e9aa3d70937cad3816d6d754ae6e9bd016cf7b81b669d0169c7115c54576bce8fa31af1a15fcc09811c2cea900090ffd6a11fe40a96768599f086b607b8b7349
+  languageName: node
+  linkType: hard
+
 "@mantine/form@npm:^7.9.1":
   version: 7.9.1
   resolution: "@mantine/form@npm:7.9.1"
@@ -6368,7 +6383,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clsx@npm:^2.1.0":
+"clsx@npm:^2.1.0, clsx@npm:^2.1.1":
   version: 2.1.1
   resolution: "clsx@npm:2.1.1"
   checksum: 10c0/c4c8eb865f8c82baab07e71bfa8897c73454881c4f99d6bc81585aecd7c441746c1399d08363dc096c550cceaf97bd4ce1e8854e1771e9998d9f94c4fe075839
@@ -6785,6 +6800,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:^1.11.11":
+  version: 1.11.11
+  resolution: "dayjs@npm:1.11.11"
+  checksum: 10c0/0131d10516b9945f05a57e13f4af49a6814de5573a494824e103131a3bbe4cc470b1aefe8e17e51f9a478a22cd116084be1ee5725cedb66ec4c3f9091202dc4b
+  languageName: node
+  linkType: hard
+
 "debug@npm:2.6.9, debug@npm:^2.2.0, debug@npm:^2.3.3":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
@@ -7066,6 +7088,7 @@ __metadata:
   resolution: "discountaria@workspace:."
   dependencies:
     "@mantine/core": "npm:7.8.1"
+    "@mantine/dates": "npm:^7.10.0"
     "@mantine/form": "npm:^7.9.1"
     "@mantine/hooks": "npm:7.8.1"
     "@storybook/addon-essentials": "npm:^8.0.0"
@@ -7086,6 +7109,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.2.0"
     "@vitejs/plugin-react": "npm:^4.2.1"
     axios: "npm:^1.6.8"
+    dayjs: "npm:^1.11.11"
     eslint: "npm:^8.57.0"
     eslint-config-airbnb: "npm:19.0.4"
     eslint-config-airbnb-typescript: "npm:^18.0.0"

@@ -8,11 +8,13 @@ import {
   Loader,
   MantineColorsTuple,
   Modal,
+  MultiSelect,
   rem,
   Select,
   TextInput,
   Title,
 } from '@mantine/core'
+import { DateInput } from '@mantine/dates'
 
 import classes from '@/styles/components.module.scss'
 
@@ -61,6 +63,22 @@ export const theme = createTheme({
       },
       styles: {
         option: {
+          color: colors.primary[9],
+        },
+      },
+    }),
+    MultiSelect: MultiSelect.extend({
+      defaultProps: {
+        variant: 'underline',
+      },
+      classNames: {
+        input: classes['text-input-override'],
+      },
+      styles: {
+        option: {
+          color: colors.primary[9],
+        },
+        pill: {
           color: colors.primary[9],
         },
       },
@@ -119,6 +137,14 @@ export const theme = createTheme({
       defaultProps: {
         size: 'lg',
         color: colors.primary[9],
+      },
+    }),
+    DateInput: DateInput.extend({
+      defaultProps: {
+        variant: 'underline',
+      },
+      classNames: {
+        input: classes['text-input-override'],
       },
     }),
   },

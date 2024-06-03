@@ -1,0 +1,17 @@
+.company-page {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: to-rem(35) to-rem(30);
+    gap: to-rem(30);
+}
+
+.company-page__title {
+    font-weight: 700 !important;
+    line-height: to-rem(70);
+    color: var(--mantine-color-primary-9);
+}
+
+.company-page__info {
+    color: var(--mantine-color-primary-9);
+}

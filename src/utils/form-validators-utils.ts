@@ -1,4 +1,4 @@
-import { has, isEmpty, isEqual } from 'lodash'
+import { has, isDate, isEmpty, isEqual } from 'lodash'
 
 import { WithProperty } from '@/types'
 
@@ -79,7 +79,7 @@ export const notInList =
   }
 
 export const required = (value: unknown) =>
-  isEmpty(value) ? 'Required field' : null
+  isEmpty(value) && !isDate(value) ? 'Required field' : null
 
 export const email = (value: unknown) =>
   !emailRegex.test(value as string) ? 'Expected valid email' : null

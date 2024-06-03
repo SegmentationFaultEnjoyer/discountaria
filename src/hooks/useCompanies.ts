@@ -47,10 +47,17 @@ export const useCompanies = () => {
     return data.Data
   }
 
+  const getCompany = async (companyId: string | number) => {
+    const { data } = await api.get<CompanyData>(`/companies/${companyId}`)
+
+    return data
+  }
+
   return {
     createCompany,
     uploadLogo,
 
     getCompanies,
+    getCompany,
   }
 }
